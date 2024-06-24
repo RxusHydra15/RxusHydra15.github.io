@@ -103,25 +103,32 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
   <script>
+    const khodamNames = [
+      'Godzila Cukurukuk',
+      'Wibu Mewing',
+      'Lintah Papua',
+      'Ayam Birahi',
+      'Bintang Skibidi',
+      'Beat Karbu',
+      'Raja Sigma',
+      'Sempak Superman',
+      'Spiderman Ngawi',
+      'Knalpot Racing',
+      'Rizzler',
+      'Ular Ohio',
+      'Hitam Legam',
+      'Linggi Limbad',
+      'Ak 47 Free Fire',
+      'Naga Indosiar',
+      'Roger Sumatra',
+      'Mio Balap',
+      'TV LG 40 inch'
+    ];
+
     document.getElementById('khodamForm').addEventListener('submit', function(event) {
       event.preventDefault();
       const name = document.getElementById('nameInput').value;
       if (name.trim() === '') return;
-
-      const khodamNames = [
-        'Godzila Cukurukuk',
-        'Wibu Mewing',
-        'Lintah Papua',
-        'Bintang Skibidi',
-        'Beat Karbu',
-        'Raja Sigma',
-        'Spiderman Ngawi',
-        'Knalpot Racing',
-        'Rizzler',
-        'Ular Ohio',
-        'Hitam Legam',
-        'TV LG 40 inch'
-      ];
 
       document.getElementById('khodamModalLabel').innerText = `Cek Khodam Nama ${name}`;
       $('#khodamModal').modal('show');
@@ -130,9 +137,20 @@
 
       setTimeout(() => {
         document.getElementById('loading').style.display = 'none';
-        const khodam = khodamNames[Math.floor(Math.random() * khodamNames.length)];
+        
+        let remainingKhodam = JSON.parse(sessionStorage.getItem('remainingKhodam')) || [...khodamNames];
+        if (remainingKhodam.length === 0) {
+          remainingKhodam = [...khodamNames];
+        }
+
+        const khodamIndex = Math.floor(Math.random() * remainingKhodam.length);
+        const khodam = remainingKhodam[khodamIndex];
+        remainingKhodam.splice(khodamIndex, 1);
+
         document.getElementById('result').innerText = khodam;
         document.getElementById('resultContainer').style.display = 'block';
+
+        sessionStorage.setItem('remainingKhodam', JSON.stringify(remainingKhodam));
       }, 2000);
     });
   </script>
