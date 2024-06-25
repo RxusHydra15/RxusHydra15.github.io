@@ -8,7 +8,9 @@
   <style>
     body, html {
       height: 100%;
-      background-color: #121212;
+      margin: 0;
+      background: url('bg.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #e0e0e0;
     }
     .container {
@@ -16,12 +18,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
     .form-container {
-      border: 1px solid #ced4da;
+      border: 1px solid #ffffff;
       padding: 20px;
       border-radius: 5px;
-      background-color: #1e1e1e;
+      background-color: rgba(30, 30, 30, 0.8); /* Transparansi 80% */
       width: 100%;
       max-width: 400px;
     }
@@ -35,9 +38,13 @@
       color: #e0e0e0;
       border-color: #777;
     }
+    .btn-danger {
+      border-radius: 50px;
+    }
     .btn-warning {
       background-color: #ff8c00;
       border-color: #ff8c00;
+      border-radius: 50px;
     }
     .btn-warning:hover {
       background-color: #ff9f1a;
@@ -59,9 +66,17 @@
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
+    .footer-text {
+      margin-top: 10px;
+      color: #e0e0e0;
+    }
+    .footer-text .highlight {
+      color: red;
+    }
   </style>
 </head>
 <body>
+  <!-- Form -->
   <div class="container">
     <div class="form-container">
       <h1 class="mb-4 text-center">Cek Khodam Online</h1>
@@ -70,12 +85,15 @@
           <label for="nameInput">Masukkan Nama Anda:</label>
           <input type="text" class="form-control" id="nameInput" required>
         </div>
-        <button type="submit" class="btn btn-warning btn-block">Cek Khodam</button>
+        <button type="submit" class="btn btn-danger btn-block">Cek Khodam</button>
       </form>
+    </div>
+    <div class="footer-text">
+      By <span class="highlight">RxusHydra</span>
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- Hasil -->
   <div class="modal fade" id="khodamModal" tabindex="-1" aria-labelledby="khodamModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -94,6 +112,7 @@
           <div id="resultContainer" class="result-container" style="display: none;">
             <div class="result-label">Khodam Anda:</div>
             <div id="result" class="alert alert-info"></div>
+            <button id="resetButton" class="btn btn-warning btn-block mt-3">Ulangi</button>
           </div>
         </div>
       </div>
@@ -117,7 +136,7 @@
       'Rizzler',
       'Ular Ohio',
       'Hitam Legam',
-      'Linggis Limbad',
+      'Linggi Limbad',
       'Ak 47 Free Fire',
       'Naga Indosiar',
       'Roger Sumatra',
@@ -152,6 +171,11 @@
 
         sessionStorage.setItem('remainingKhodam', JSON.stringify(remainingKhodam));
       }, 2000);
+    });
+
+    document.getElementById('resetButton').addEventListener('click', function() {
+      $('#khodamModal').modal('hide');
+      document.getElementById('khodamForm').reset();
     });
   </script>
 </body>
